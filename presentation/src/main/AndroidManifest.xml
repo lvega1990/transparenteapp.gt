@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="gt.transparente.app.presentation">
+
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+  <application
+      android:allowBackup="true"
+      android:name=".AndroidApplication"
+      android:icon="@mipmap/ic_launcher"
+      android:label="@string/app_name"
+      android:theme="@style/AppTheme">
+
+    <activity
+        android:name=".view.activity.MainActivity"
+        android:label="@string/app_name">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+
+    <activity
+        android:name=".view.activity.PoliticalPartyListActivity"
+        android:label="@string/activity_title_political_party_list">
+    </activity>
+
+    <activity
+        android:name=".view.activity.PoliticalPartyDetailsActivity"
+        android:label="@string/activity_title_political_party_details">
+    </activity>
+  </application>
+
+</manifest>
