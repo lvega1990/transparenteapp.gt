@@ -9,6 +9,15 @@ El proyecto esta divido en 3 capas:
 * Capa de dominio: En la capa de dominio se encuentran todas las reglas de negocio construidas con interfaces.
 * Capa de datos: Se encarga de recuperar la información que va ser desplegada en la aplicación, se utiliza [repository pattern](http://martinfowler.com/eaaCatalog/repository.html) el cual permite que el origen de la información sea transparente para el usuario.
 
+Librerias utilizadas:
+* [Android Design Support Library](http://android-developers.blogspot.com/2015/05/android-design-support-library.html)
+* [Dagger 2](http://google.github.io/dagger/)
+* [Retrofit](http://square.github.io/retrofit/)
+* [OkHttp](square.github.io/okhttp/)
+* [ReactiveX](http://reactivex.io/)
+* [ButterKnife](http://jakewharton.github.io/butterknife/)
+* [gson](https://github.com/google/gson)
+
 Screenshots
 
 ![Transparente App](https://raw.githubusercontent.com/punkete1990/transparenteapp.gt/master/images/screen1.png)
