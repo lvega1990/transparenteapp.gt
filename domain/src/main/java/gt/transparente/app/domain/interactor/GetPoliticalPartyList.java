@@ -14,17 +14,23 @@ import rx.Observable;
  * retrieving a collection of all {@link PoliticalParty}.
  */
 public class GetPoliticalPartyList extends UseCase {
+    private int pageNumber;
+    private final TransparentRepository transparentRepository;
 
-  private final TransparentRepository transparentRepository;
 
-  @Inject
-  public GetPoliticalPartyList(TransparentRepository transparentRepository, ThreadExecutor threadExecutor,
-                               PostExecutionThread postExecutionThread) {
-    super(threadExecutor, postExecutionThread);
-    this.transparentRepository = transparentRepository;
-  }
+    @Inject
+    public GetPoliticalPartyList(TransparentRepository transparentRepository, ThreadExecutor threadExecutor,
+                                 PostExecutionThread postExecutionThread) {
+        super(threadExecutor, postExecutionThread);
+        this.transparentRepository = transparentRepository;
+    }
 
-  @Override public Observable buildUseCaseObservable() {
-    return this.transparentRepository.politicalPartyList();
-  }
+    @Override
+    public Observable buildUseCaseObservable() {
+        return this.transparentRepository.politicalPartyList(this.pageNumber);
+    }
+
+    public void setPageNumber(int pageNumber) {
+        this.pageNumber = pageNumber;
+    }
 }

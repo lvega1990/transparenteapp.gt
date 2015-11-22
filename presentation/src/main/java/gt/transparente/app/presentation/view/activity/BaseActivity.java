@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
 import gt.transparente.app.presentation.AndroidApplication;
 import gt.transparente.app.presentation.di.components.ApplicationComponent;
 import gt.transparente.app.presentation.di.modules.ActivityModule;
@@ -13,7 +15,7 @@ import javax.inject.Inject;
 /**
  * Base {@link android.app.Activity} class for every Activity in this application.
  */
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends AppCompatActivity {
 
   @Inject Navigator navigator;
 

@@ -37,8 +37,8 @@ public class CloudTransparentDataStore implements TransparentDataStore {
     }
 
     @Override
-    public Observable<List<PoliticalPartyEntity>> politicalPartyEntityList() {
-        return mTransparentProvider.politicalPartyEntityList();
+    public Observable<List<PoliticalPartyEntity>> politicalPartyEntityList(int pageNumber) {
+        return mTransparentProvider.politicalPartyEntityList(pageNumber);
     }
 
     @Override

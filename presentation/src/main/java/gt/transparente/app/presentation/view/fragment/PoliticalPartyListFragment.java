@@ -22,6 +22,7 @@ import gt.transparente.app.presentation.presenter.PoliticalPartyListPresenter;
 import gt.transparente.app.presentation.view.PoliticalPartyListView;
 import gt.transparente.app.presentation.view.adapter.PoliticalPartyAdapter;
 import gt.transparente.app.presentation.view.adapter.PoliticalPartyLayoutManager;
+import gt.transparente.app.presentation.view.component.EndlessRecyclerOnScrollListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -119,7 +120,12 @@ public class PoliticalPartyListFragment extends BaseFragment implements Politica
     private void setupUI() {
         this.mPoliticalPartyLayoutManager = new PoliticalPartyLayoutManager(getActivity());
         this.rv_political_parties.setLayoutManager(mPoliticalPartyLayoutManager);
-
+        this.rv_political_parties.setOnScrollListener(new EndlessRecyclerOnScrollListener(mPoliticalPartyLayoutManager) {
+            @Override
+            public void onLoadMore(int current_page) {
+                politicalPartyListPresenter.initialize(current_page);
+            }
+        });
         this.mPoliticalPartyAdapter = new PoliticalPartyAdapter(getActivity(), new ArrayList<PoliticalPartyModel>());
         this.mPoliticalPartyAdapter.setOnItemClickListener(onItemClickListener);
         this.rv_political_parties.setAdapter(mPoliticalPartyAdapter);
@@ -175,7 +181,7 @@ public class PoliticalPartyListFragment extends BaseFragment implements Politica
      * Loads all political parties.
      */
     private void loadPoliticalPartyList() {
-        this.politicalPartyListPresenter.initialize();
+        this.politicalPartyListPresenter.initialize(1);
     }
 
     @OnClick(R.id.bt_retry)

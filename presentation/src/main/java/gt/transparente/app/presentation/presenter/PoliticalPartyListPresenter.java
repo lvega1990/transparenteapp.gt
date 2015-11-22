@@ -3,11 +3,14 @@ package gt.transparente.app.presentation.presenter;
 
 import android.support.annotation.NonNull;
 
+import gt.transparente.app.data.exception.NoMoreDataAvailableException;
 import gt.transparente.app.domain.PoliticalParty;
 import gt.transparente.app.domain.exception.DefaultErrorBundle;
 import gt.transparente.app.domain.exception.ErrorBundle;
 import gt.transparente.app.domain.interactor.DefaultSubscriber;
+import gt.transparente.app.domain.interactor.GetPoliticalPartyList;
 import gt.transparente.app.domain.interactor.UseCase;
+import gt.transparente.app.presentation.di.modules.TransparentModule_ProvideGetPoliticalPartyListUseCaseFactory;
 import gt.transparente.app.presentation.exception.ErrorMessageFactory;
 import gt.transparente.app.presentation.di.PerActivity;
 import gt.transparente.app.presentation.mapper.PoliticalPartyModelDataMapper;
@@ -29,12 +32,12 @@ public class PoliticalPartyListPresenter implements Presenter {
 
     private PoliticalPartyListView mViewListView;
 
-    private final UseCase mGetPoliticalPartyListUseCase;
+    private final GetPoliticalPartyList mGetPoliticalPartyListUseCase;
     private final PoliticalPartyModelDataMapper mPoliticalPartyModelDataMapper;
 
     @Inject
     public PoliticalPartyListPresenter(@Named("politicalPartyList") UseCase getPoliticalPartyListUseCase, PoliticalPartyModelDataMapper politicalPartyModelDataMapper) {
-        this.mGetPoliticalPartyListUseCase = getPoliticalPartyListUseCase;
+        this.mGetPoliticalPartyListUseCase = (GetPoliticalPartyList) getPoliticalPartyListUseCase;
         this.mPoliticalPartyModelDataMapper = politicalPartyModelDataMapper;
     }
 
@@ -58,17 +61,17 @@ public class PoliticalPartyListPresenter implements Presenter {
     /**
      * Initializes the presenter by start retrieving the political party list.
      */
-    public void initialize() {
-        this.loadPoliticalPartyList();
+    public void initialize(int pageNumber) {
+        this.loadPoliticalPartyList(pageNumber);
     }
 
     /**
      * Loads all political parties.
      */
-    private void loadPoliticalPartyList() {
+    private void loadPoliticalPartyList(int pageNumber) {
         this.hideViewRetry();
         this.showViewLoading();
-        this.getPoliticalPartyList();
+        this.getPoliticalPartyList(pageNumber);
     }
 
     public void onPoliticalPartyClicked(PoliticalPartyModel politicalPartyModel) {
@@ -103,7 +106,8 @@ public class PoliticalPartyListPresenter implements Presenter {
         this.mViewListView.renderPoliticalPartyList(PoliticalPartyModel);
     }
 
-    private void getPoliticalPartyList() {
+    private void getPoliticalPartyList(int pageNumber) {
+        this.mGetPoliticalPartyListUseCase.setPageNumber(pageNumber);
         this.mGetPoliticalPartyListUseCase.execute(new PoliticalPartyListSubscriber());
     }
 
@@ -118,7 +122,9 @@ public class PoliticalPartyListPresenter implements Presenter {
         public void onError(Throwable e) {
             PoliticalPartyListPresenter.this.hideViewLoading();
             PoliticalPartyListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
-            PoliticalPartyListPresenter.this.showViewRetry();
+            if (!(e instanceof NoMoreDataAvailableException)) {
+                PoliticalPartyListPresenter.this.showViewRetry();
+            }
         }
 
         @Override

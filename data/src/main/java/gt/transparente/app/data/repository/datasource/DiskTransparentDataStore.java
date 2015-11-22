@@ -23,7 +23,7 @@ public class DiskTransparentDataStore implements TransparentDataStore {
   }
 
   @Override
-  public Observable<List<PoliticalPartyEntity>> politicalPartyEntityList() {
+  public Observable<List<PoliticalPartyEntity>> politicalPartyEntityList(int pageNumber) {
     //TODO: implement simple cache for storing/retrieving collections of parties.
     throw new UnsupportedOperationException("Operation is not available!!!");
   }

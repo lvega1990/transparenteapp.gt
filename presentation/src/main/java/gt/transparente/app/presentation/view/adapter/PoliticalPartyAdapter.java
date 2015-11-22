@@ -68,7 +68,11 @@ public class PoliticalPartyAdapter extends RecyclerView.Adapter<PoliticalPartyAd
 
     public void setPoliticalPartyCollection(Collection<PoliticalPartyModel> politicalPartyCollection) {
         this.validatePoliticalPartyCollection(politicalPartyCollection);
-        this.mPoliticalPartyCollection = (List<PoliticalPartyModel>) politicalPartyCollection;
+        if (this.mPoliticalPartyCollection == null) {
+            this.mPoliticalPartyCollection = (List<PoliticalPartyModel>) politicalPartyCollection;
+        } else {
+            this.mPoliticalPartyCollection.addAll(politicalPartyCollection);
+        }
         this.notifyDataSetChanged();
     }
 

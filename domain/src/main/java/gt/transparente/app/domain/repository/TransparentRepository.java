@@ -13,7 +13,7 @@ public interface TransparentRepository {
   /**
    * Get an {@link Observable} which will emit a List of {@link PoliticalParty}.
    */
-  Observable<List<PoliticalParty>> politicalPartyList();
+  Observable<List<PoliticalParty>> politicalPartyList(final int page);
 
   /**
    * Get an {@link Observable} which will emit a {@link PoliticalParty}.

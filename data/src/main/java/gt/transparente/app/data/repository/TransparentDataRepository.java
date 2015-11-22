@@ -32,10 +32,10 @@ public class TransparentDataRepository implements TransparentRepository {
     this.mPoliticalPartyEntityDataMapper = politicalPartyEntityDataMapper;
   }
 
-  @Override public Observable<List<PoliticalParty>> politicalPartyList() {
+  @Override public Observable<List<PoliticalParty>> politicalPartyList(int pageNumber) {
     //we always get all Political Parties from the cloud
     final TransparentDataStore transparentDataStore = this.mTransparentDataStoreFactory.createCloudDataStore();
-    return transparentDataStore.politicalPartyEntityList()
+    return transparentDataStore.politicalPartyEntityList(pageNumber)
             .map(mPoliticalPartyEntityDataMapper::transform);
   }
 

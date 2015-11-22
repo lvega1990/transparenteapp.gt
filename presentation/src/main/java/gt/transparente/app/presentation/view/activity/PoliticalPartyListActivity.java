@@ -4,6 +4,8 @@ package gt.transparente.app.presentation.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.Window;
 
 import gt.transparente.app.presentation.R;
@@ -24,13 +26,17 @@ public class PoliticalPartyListActivity extends BaseActivity implements HasCompo
     }
 
     private TransparentComponent mTransparentComponent;
-
+    private CollapsingToolbarLayout mCollapsingToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_political_party_list);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.anim_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        mCollapsingToolbar.setTitle("Transparente.gt");
         this.initializeInjector();
     }
 

@@ -12,7 +12,7 @@ public interface TransparentDataStore {
   /**
    * Get an {@link rx.Observable} which will emit a List of {@link PoliticalPartyEntity}.
    */
-  Observable<List<PoliticalPartyEntity>> politicalPartyEntityList();
+  Observable<List<PoliticalPartyEntity>> politicalPartyEntityList(final int pageNumber);
 
   /**
    * Get an {@link rx.Observable} which will emit a {@link PoliticalPartyEntity} by its id.

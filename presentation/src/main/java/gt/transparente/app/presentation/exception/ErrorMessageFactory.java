@@ -4,6 +4,7 @@ package gt.transparente.app.presentation.exception;
 import android.content.Context;
 
 import gt.transparente.app.data.exception.NetworkConnectionException;
+import gt.transparente.app.data.exception.NoMoreDataAvailableException;
 import gt.transparente.app.data.exception.PoliticalPartyNotFoundException;
 import gt.transparente.app.presentation.R;
 
@@ -30,6 +31,8 @@ public class ErrorMessageFactory {
             message = context.getString(R.string.exception_message_no_connection);
         } else if (exception instanceof PoliticalPartyNotFoundException) {
             message = context.getString(R.string.exception_message_political_party_not_found);
+        }  else if (exception instanceof NoMoreDataAvailableException) {
+            message = context.getString(R.string.exception_message_no_more_data_available);
         }
 
         return message;

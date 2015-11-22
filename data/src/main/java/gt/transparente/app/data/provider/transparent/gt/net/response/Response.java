@@ -38,4 +38,20 @@ public class Response<T> {
     public int getPage() {
         return mPage;
     }
+
+    public void setPageCount(int mPageCount) {
+        this.mPageCount = mPageCount;
+    }
+
+    public void setPageSize(int mPageSize) {
+        this.mPageSize = mPageSize;
+    }
+
+    public void setTotalItem(int mTotalItem) {
+        this.mTotalItem = mTotalItem;
+    }
+
+    public void setPage(int mPage) {
+        this.mPage = mPage;
+    }
 }
