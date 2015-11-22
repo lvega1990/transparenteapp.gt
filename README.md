@@ -2,7 +2,7 @@
 
 TransparenteApp utiliza la primera API de datos abiertos de Guatemala, gracias a [Transparente.gt](http://transparente.gt/apigility/documentation/Api-v1)
 
-La Aplicación movil esta desarrollada utilizando la arquitecura limpia propuesta por [Uncle Bob](http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+La Aplicación movil esta desarrollada utilizando la arquitecura propuesta por [Fernando Cejas](http://fernandocejas.com/) basada en la arquitectura limpia de [Uncle Bob](http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 
 El proyecto esta divido en 3 capas:
 * Capa de Presentacion: Maneja toda las vistas y esta construida con el patron de diseño [MVP](https://github.com/pedrovgs/EffectiveAndroidUI/).
