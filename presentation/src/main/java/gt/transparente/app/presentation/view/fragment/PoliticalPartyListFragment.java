@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import butterknife.Bind;
@@ -16,7 +15,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import gt.transparente.app.presentation.R;
 import gt.transparente.app.presentation.di.components.TransparentComponent;
-import gt.transparente.app.presentation.model.PoliticalPartyModel;
 import gt.transparente.app.presentation.model.PoliticalPartyModel;
 import gt.transparente.app.presentation.presenter.PoliticalPartyListPresenter;
 import gt.transparente.app.presentation.view.PoliticalPartyListView;
@@ -45,17 +43,13 @@ public class PoliticalPartyListFragment extends BaseFragment implements Politica
     PoliticalPartyListPresenter politicalPartyListPresenter;
 
     @Bind(R.id.rv_political_parties)
-    RecyclerView rv_political_parties;
+    RecyclerView rvPolitical_parties;
     @Bind(R.id.rl_progress)
-    RelativeLayout rl_progress;
+    RelativeLayout rlProgress;
     @Bind(R.id.rl_retry)
-    RelativeLayout rl_retry;
-    @Bind(R.id.bt_retry)
-    Button bt_retry;
+    RelativeLayout rlRetry;
 
     private PoliticalPartyAdapter mPoliticalPartyAdapter;
-    private PoliticalPartyLayoutManager mPoliticalPartyLayoutManager;
-
     private PoliticalPartyListListener mPoliticalPartyListListener;
 
     public PoliticalPartyListFragment() {
@@ -63,10 +57,10 @@ public class PoliticalPartyListFragment extends BaseFragment implements Politica
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (activity instanceof PoliticalPartyListListener) {
-            this.mPoliticalPartyListListener = (PoliticalPartyListListener) activity;
+    public void onAttach(Activity context) {
+        super.onAttach(context);
+        if (context instanceof PoliticalPartyListListener) {
+            this.mPoliticalPartyListListener = (PoliticalPartyListListener) context;
         }
     }
 
@@ -118,39 +112,37 @@ public class PoliticalPartyListFragment extends BaseFragment implements Politica
     }
 
     private void setupUI() {
-        this.mPoliticalPartyLayoutManager = new PoliticalPartyLayoutManager(getActivity());
-        this.rv_political_parties.setLayoutManager(mPoliticalPartyLayoutManager);
-        this.rv_political_parties.setOnScrollListener(new EndlessRecyclerOnScrollListener(mPoliticalPartyLayoutManager) {
+        PoliticalPartyLayoutManager mPoliticalPartyLayoutManager = new PoliticalPartyLayoutManager(getContext());
+        this.rvPolitical_parties.setLayoutManager(mPoliticalPartyLayoutManager);
+        this.rvPolitical_parties.addOnScrollListener(new EndlessRecyclerOnScrollListener(mPoliticalPartyLayoutManager) {
             @Override
             public void onLoadMore(int current_page) {
                 politicalPartyListPresenter.initialize(current_page);
             }
         });
-        this.mPoliticalPartyAdapter = new PoliticalPartyAdapter(getActivity(), new ArrayList<PoliticalPartyModel>());
+        this.mPoliticalPartyAdapter = new PoliticalPartyAdapter(getContext(), new ArrayList<PoliticalPartyModel>());
         this.mPoliticalPartyAdapter.setOnItemClickListener(onItemClickListener);
-        this.rv_political_parties.setAdapter(mPoliticalPartyAdapter);
+        this.rvPolitical_parties.setAdapter(mPoliticalPartyAdapter);
     }
 
     @Override
     public void showLoading() {
-        this.rl_progress.setVisibility(View.VISIBLE);
-        this.getActivity().setProgressBarIndeterminateVisibility(true);
+        this.rlProgress.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-        this.rl_progress.setVisibility(View.GONE);
-        this.getActivity().setProgressBarIndeterminateVisibility(false);
+        this.rlProgress.setVisibility(View.GONE);
     }
 
     @Override
     public void showRetry() {
-        this.rl_retry.setVisibility(View.VISIBLE);
+        this.rlRetry.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideRetry() {
-        this.rl_retry.setVisibility(View.GONE);
+        this.rlRetry.setVisibility(View.GONE);
     }
 
     @Override

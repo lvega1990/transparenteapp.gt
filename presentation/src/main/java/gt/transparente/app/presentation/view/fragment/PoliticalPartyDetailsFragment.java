@@ -1,12 +1,12 @@
 
 package gt.transparente.app.presentation.view.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,6 +25,12 @@ import javax.inject.Inject;
  * Fragment that shows details of a certain political party.
  */
 public class PoliticalPartyDetailsFragment extends BaseFragment implements PoliticalPartyDetailsView {
+    /**
+     * Interface to render title.
+     */
+    public interface PoliticalPartyDetailsListener {
+        void onRenderTitle(final String title);
+    }
 
     private static final String ARGUMENT_KEY_POLITICAL_PARTY_ID = "gt.transparente.ARGUMENT_POLITICAL_PARTY_ID";
     private int mPoliticalPartyId;
@@ -33,15 +39,13 @@ public class PoliticalPartyDetailsFragment extends BaseFragment implements Polit
     PoliticalPartyDetailsPresenter politicalPartyDetailsPresenter;
 
     @Bind(R.id.tv_name)
-    TextView tv_name;
-    @Bind(R.id.tv_abbreviation)
-    TextView tv_abbreviation;
+    TextView tvName;
     @Bind(R.id.rl_progress)
-    RelativeLayout rl_progress;
+    RelativeLayout rlProgress;
     @Bind(R.id.rl_retry)
-    RelativeLayout rl_retry;
-    @Bind(R.id.bt_retry)
-    Button bt_retry;
+    RelativeLayout rlRetry;
+
+    private PoliticalPartyDetailsListener mPoliticalPartyDetailsListener;
 
     public PoliticalPartyDetailsFragment() {
         super();
@@ -56,6 +60,14 @@ public class PoliticalPartyDetailsFragment extends BaseFragment implements Polit
         politicalPartyDetailsFragment.setArguments(argumentsBundle);
 
         return politicalPartyDetailsFragment;
+    }
+
+    @Override
+    public void onAttach(Activity context) {
+        super.onAttach(context);
+        if (context instanceof PoliticalPartyDetailsListener) {
+            this.mPoliticalPartyDetailsListener = (PoliticalPartyDetailsListener) context;
+        }
     }
 
     @Override
@@ -108,31 +120,31 @@ public class PoliticalPartyDetailsFragment extends BaseFragment implements Polit
     @Override
     public void renderPoliticalParty(PoliticalPartyModel politicalParty) {
         if (politicalParty != null) {
-            this.tv_name.setText(politicalParty.getName());
-            this.tv_abbreviation.setText(politicalParty.getAbbreviation());
+            if (this.mPoliticalPartyDetailsListener != null) {
+                this.mPoliticalPartyDetailsListener.onRenderTitle(politicalParty.getAbbreviation());
+            }
+            this.tvName.setText(politicalParty.getName());
         }
     }
 
     @Override
     public void showLoading() {
-        this.rl_progress.setVisibility(View.VISIBLE);
-        this.getActivity().setProgressBarIndeterminateVisibility(true);
+        this.rlProgress.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-        this.rl_progress.setVisibility(View.GONE);
-        this.getActivity().setProgressBarIndeterminateVisibility(false);
+        this.rlProgress.setVisibility(View.GONE);
     }
 
     @Override
     public void showRetry() {
-        this.rl_retry.setVisibility(View.VISIBLE);
+        this.rlRetry.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideRetry() {
-        this.rl_retry.setVisibility(View.GONE);
+        this.rlRetry.setVisibility(View.GONE);
     }
 
     @Override

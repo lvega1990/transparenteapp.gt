@@ -4,8 +4,13 @@ package gt.transparente.app.presentation.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Window;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import gt.transparente.app.presentation.R;
 import gt.transparente.app.presentation.di.HasComponent;
 import gt.transparente.app.presentation.di.components.DaggerTransparentComponent;
@@ -16,10 +21,16 @@ import gt.transparente.app.presentation.view.fragment.PoliticalPartyDetailsFragm
 /**
  * Activity that shows details of a certain political party.
  */
-public class PoliticalPartyDetailsActivity extends BaseActivity implements HasComponent<TransparentComponent> {
+public class PoliticalPartyDetailsActivity extends BaseActivity implements HasComponent<TransparentComponent>,
+        PoliticalPartyDetailsFragment.PoliticalPartyDetailsListener {
 
     private static final String INTENT_EXTRA_PARAM_POLITICAL_PARTY_ID = "gt.transparente.INTENT_PARAM_POLITICAL_PARTY_ID";
     private static final String INSTANCE_STATE_PARAM_POLITICAL_PARTY_ID = "gt.transparente.STATE_PARAM_POLITICAL_PARTY_ID";
+
+    @Bind(R.id.anim_toolbar)
+    public Toolbar toolbar;
+    @Bind(R.id.collapsing_toolbar)
+    public CollapsingToolbarLayout collapsingToolbar;
 
     private int mPoliticalPartyId;
     private TransparentComponent mTransparentComponent;
@@ -27,7 +38,6 @@ public class PoliticalPartyDetailsActivity extends BaseActivity implements HasCo
     public static Intent getCallingIntent(Context context, int politicalPartyId) {
         Intent callingIntent = new Intent(context, PoliticalPartyDetailsActivity.class);
         callingIntent.putExtra(INTENT_EXTRA_PARAM_POLITICAL_PARTY_ID, politicalPartyId);
-
         return callingIntent;
     }
 
@@ -35,9 +45,9 @@ public class PoliticalPartyDetailsActivity extends BaseActivity implements HasCo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_political_party_details);
-
         this.initializeActivity(savedInstanceState);
         this.initializeInjector();
+        this.initializeView();
     }
 
     @Override
@@ -48,6 +58,29 @@ public class PoliticalPartyDetailsActivity extends BaseActivity implements HasCo
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        ButterKnife.unbind(this);
+        super.onDestroy();
+    }
+
+    private void initializeView() {
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
+    }
     /**
      * Initializes this activity.
      */
@@ -61,6 +94,7 @@ public class PoliticalPartyDetailsActivity extends BaseActivity implements HasCo
     }
 
     private void initializeInjector() {
+        ButterKnife.bind(this);
         this.mTransparentComponent = DaggerTransparentComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
@@ -71,5 +105,12 @@ public class PoliticalPartyDetailsActivity extends BaseActivity implements HasCo
     @Override
     public TransparentComponent getComponent() {
         return mTransparentComponent;
+    }
+
+    @Override
+    public void onRenderTitle(String title) {
+        if (collapsingToolbar != null) {
+            collapsingToolbar.setTitle(title);
+        }
     }
 }

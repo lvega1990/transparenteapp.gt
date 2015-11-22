@@ -3,19 +3,23 @@
     <string name="app_name">Transparente.gt</string>
     <string name="url">http://transparente.gt/</string>
 
-    <string name="activity_title_political_party_list">Political Parties List</string>
-    <string name="activity_title_political_party_details">Political Party Details</string>
+    <string name="text_load_political_party">Partidos Politicos</string>
+    <string name="text_load_political_party_description">Todos los empleados municipales pertenecen a un partido político.</string>
+    <string name="text_load_municipal_employee">Empleados Municipales</string>
+    <string name="text_load_municipal_employee_description">Los empleados municipales son los miembros del consejo municipal (alcaldes, consejales, etc)</string>
+    <string name="text_load_supplier">Proveedor</string>
+    <string name="text_load_supplier_description">Proveedores adjudicados en Guatecompras.</string>
+    <string name="text_load_legal_representatives">Representantes Legales</string>
+    <string name="text_load_legal_representatives_description">Catálogo de representantes legales recopilados al importar los proveedores..</string>
 
-    <string name="btn_text_load_data">Load Political Parties</string>
-    <string name="btn_text_retry">Retry</string>
-
-    <string name="view_text_abbreviation">Abbreviation:</string>
-
-    <string name="string_content_description">Non accessible view</string>
+    <string name="btn_text_retry">Intentar de nuevo</string>
+    <string name="view_text_abbreviation">Iniciales:</string>
+    <string name="view_text_name">Nombre:</string>
+    <string name="string_content_description">Vista no accesible</string>
 
     //Exception messages
-    <string name="exception_message_generic">There was an application error</string>
-    <string name="exception_message_no_connection">There is no internet connection</string>
-    <string name="exception_message_political_party_not_found">Cannot retrieve political party data. Check your internet connection</string>
-    <string name="exception_message_no_more_data_available">No more data is available!</string>
+    <string name="exception_message_generic">¡Ups! Ha ocurrido un error</string>
+    <string name="exception_message_no_connection">Ninguna conexión al Internet está disponible actualmente</string>
+    <string name="exception_message_political_party_not_found">No se puede obtener la información del partido politico. Revisa tu conexión al Internet</string>
+    <string name="exception_message_no_more_data_available">No hay más datos disponibles</string>
 </resources>
